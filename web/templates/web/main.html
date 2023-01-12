@@ -26,6 +26,19 @@
     <form action="" method="get">
         <input type="text" name="search" placeholder="Поиск..."
                value="{{ search|default_if_none:'' }}">
+
+        <select name="tag_id">
+            <option value="">Выберите тег</option>
+            {% for tag in tags %}
+                <option
+                    value="{{ tag.id }}"
+                    {% if tag_id == tag.id %}selected{% endif %}
+                >
+                    {{ tag.title }}
+                </option>
+            {% endfor %}
+        </select>
+
         <button>Найти</button>
     </form>
 
