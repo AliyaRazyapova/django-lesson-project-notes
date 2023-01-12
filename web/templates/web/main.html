@@ -10,6 +10,30 @@
   <h2>Список заметок</h2>
     <p>
         Количество заметок: {{ count }}
+        Выводить
+        {% if not with_alerts %}
+            <u>
+        {% else %}
+            <a href="?">
+        {% endif %}
+            все заметки
+        {% if not with_alerts %}
+            </u>
+        {% else %}
+            </a>
+        {% endif %}
+        |
+        {% if with_alerts %}
+            <u>
+        {% else %}
+            <a href="?with_alerts">
+        {% endif %}
+            c напоминаниями
+        {% if with_alerts %}
+            </u>
+        {% else %}
+            </a>
+        {% endif %}
     </p>
 
     <ul>
