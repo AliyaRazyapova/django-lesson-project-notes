@@ -23,7 +23,8 @@
     <br>
 
     <form action="" method="get">
-        <input type="text" name="search" placeholder="Поиск...">
+        <input type="text" name="search" placeholder="Поиск..."
+               value="{{ search|default_if_none:'' }}">
         <button>Найти</button>
     </form>
 
