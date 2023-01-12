@@ -54,7 +54,7 @@ def note_view(request, id):
 
 def note_edit_view(request, id=None):
     user = User.objects.first()  # TODO get user from auth
-    form = NoteForm(request.POST)
+    form = NoteForm()
     error, title, text = None, None, None
 
     note = None
@@ -64,6 +64,7 @@ def note_edit_view(request, id=None):
         text = note.text
 
     if request.method == 'POST':
+        form = NoteForm(request.POST)
         title = request.POST.get("title")
         text = request.POST.get("text")
         print(form.is_valid())

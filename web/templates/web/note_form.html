@@ -15,7 +15,10 @@
 {% endif %}
 <h1>Добавление заметки</h1>
 
-{{ form.errors }}
+{% if form.errors %}
+    <b>Возникли ошибки при заполнении формы. Пожалуйста, исправьте их:</b>
+    {{ form.errors }}
+{% endif %}
 
 <form action="" method="post">
     {% csrf_token %}
