@@ -17,7 +17,7 @@ def notes_view(request):
     except (TypeError, ValueError):
         tag_id = None
 
-    notes = Note.objects.all()
+    notes = Note.objects.all().order_by('-created_at')
 
     if with_alerts:
         notes = notes.filter(alert_send_at__isnull=False)
