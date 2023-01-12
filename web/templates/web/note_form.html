@@ -13,9 +13,22 @@
 
 <h1>Создание заметки</h1>
 
-<form action="">
-    <span>Название</span>
-    <input type="text" name="title" placeholder="Введите название">
+<form action="" method="post">
+    {% csrf_token %}
+
+    <label>
+        Название <br>
+        <input type="text" id="title" name="title" placeholder="Введите название">
+    </label>
+    <br><br>
+
+    <label>
+        Текст <br>
+        <textarea name="text" id="text"></textarea>
+    </label>
+    <br><br>
+
+    <button>Добавить заметку</button>
 </form>
 
 </body>
