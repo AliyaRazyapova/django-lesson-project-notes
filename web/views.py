@@ -8,6 +8,7 @@ def main_view(request):
     notes = Note.objects.all()
 
     for note in notes:
+        print(note)
         print(note.title)
         print(note.text)
         print(note.user)

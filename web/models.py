@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-
 User = get_user_model()
 
 
@@ -29,3 +28,6 @@ class Note(BaseModel):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	alert_send_at = models.DateTimeField(null=True)
 	tags = models.ManyToManyField(Tag)
+
+	def __str__(self):
+		return f'Note #{self.id} "{self.title}"'
