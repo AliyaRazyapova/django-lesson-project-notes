@@ -11,4 +11,15 @@ class Note(models.Model):
 	alert_send_at = models.DateTimeField(null=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-    
+
+
+class Tag(models.Model):
+	title = models.CharField(max_length=200)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	parent_tag = models.ForeignKey(
+		"self",
+		on_delete=models.SET_NULL,
+		null=True
+	)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
