@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from web.forms import NoteForm
+from web.forms import NoteForm, RegistrationForm
 from web.models import Note, Tag, User
 
 
@@ -70,3 +70,9 @@ def note_edit_view(request, id=None):
         'form': form
     })
 
+
+def registration_view(request):
+    form = RegistrationForm()
+    return render(request, "web/registration.html", {
+        "form": form
+    })

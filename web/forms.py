@@ -11,3 +11,8 @@ class NoteForm(forms.Form):
     class Meta:
         model = Note
         fields = ('title', 'text')
+
+
+    class RegistationForm(forms.Form):
+        email = forms.EmailField()
+        password = forms.CharField(widget=forms.PasswordInput())
