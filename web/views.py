@@ -51,22 +51,33 @@ def note_view(request, id):
     })
 
 
-def note_add_view(request):
+def note_edit_view(request, id=None):
     user = User.objects.first()  # TODO get user from auth
     error, title, text = None, None, None
+
+    note = None
+    if id is not None:
+        note = get_object_or_404(Note, id=id)
+        title = note.title
+        text = note.text
+
     if request.method == 'POST':
         title = request.POST.get("title")
         text = request.POST.get("text")
         if not title or not text:
             error = 'Название или текст не заполнены. Их нужно заполнить.'
         else:
-            note = Note.objects.create(
-                title=title, text=text, user=user
-            )
+            if note is None:
+                note = Note()
+            note.title = title
+            note.text = text
+            note.user = user
+            note.save()
             return redirect('note', note.id)
     return render(request, "web/note_form.html", {
         'error': error,
         'title': title,
-        'text': text
+        'text': text,
+        'id': id
     })
 
