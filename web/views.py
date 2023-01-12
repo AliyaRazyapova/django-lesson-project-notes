@@ -13,7 +13,10 @@ def main_view(request):
         notes = notes.filter(alert_send_at__isnull=False)
 
     if search:
-        notes = notes.filter(title_icontains=search)
+        notes = notes.filter(
+            title__icontains=search,
+            text__icontains=search
+        )
 
     return render(request, "web/main.html", {
         'count': Note.objects.count(),
