@@ -15,9 +15,7 @@
 {% endif %}
 <h1>Добавление заметки</h1>
 
-{% if error %}
-    <b>Ошибка: {{ error }}</b>
-{% endif %}
+{{ form.errors }}
 
 <form action="" method="post">
     {% csrf_token %}
