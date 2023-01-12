@@ -8,6 +8,7 @@
     <title>Заметка {{ note.title }}</title>
 </head>
 <body>
+    <a href="{% url 'notes_list' %}">Назад</a>
     <h1>{{ note.title }}</h1>
 
     <p>{{ note.text }}</p>
