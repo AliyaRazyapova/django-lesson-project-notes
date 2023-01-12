@@ -45,7 +45,10 @@ def notes_view(request):
 
 
 def note_view(request, id):
-    note = Note.objects.get(id=id)
-    return render(request, "web/note.html", {
-        'note': note
-    })
+    try:
+        note = Note.objects.get(id=id)
+        return render(request, "web/note.html", {
+            'note': note
+        })
+    except Note.DoesNotExist:
+        return HttpResponse("Страница не найдена", status=404)
