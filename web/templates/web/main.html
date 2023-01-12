@@ -9,10 +9,12 @@
   <hr>
   <h2>Список заметок</h2>
     <p>Количество заметок: {{ count }}</p>
-    {{ a }} {{ b }}
+
     <ul>
-        {% for item in example_list %}
-            <li>{{ item.name }} ({{ item.age }})</li>
+        {% for note in notes %}
+            <li>
+                <b>{{ note.title }}</b> <small>#{{ note.id }}</small>
+            </li>
         {% endfor %}
     </ul>
 
