@@ -13,8 +13,7 @@ def main_view(request):
         notes = notes.filter(alert_send_at__isnull=False)
 
     if search:
-        # SELECT * FROM web_note WHERE title = "..."
-        notes = notes.filter(title=search)
+        notes = notes.filter(title_iexact=search)
 
     return render(request, "web/main.html", {
         'count': Note.objects.count(),
