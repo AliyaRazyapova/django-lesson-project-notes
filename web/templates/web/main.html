@@ -36,6 +36,7 @@
                 {% if note.alert_send_at %}
                     – напомнить в {{ note.alert_send_at|date:"d.m.Y H:i" }}
                 {% endif %}
+                <small>{{ note.text|slice:":15" }}...</small>
             </li>
         {% endfor %}
     </ul>
