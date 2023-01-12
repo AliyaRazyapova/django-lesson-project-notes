@@ -43,6 +43,9 @@
         <button>Найти</button>
     </form>
 
+    <br>
+    <a href="{% url 'notes_add' %}">Добавить заметку</a>
+
     <ul>
         {% for note in notes %}
             <li>

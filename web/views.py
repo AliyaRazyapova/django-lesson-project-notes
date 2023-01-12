@@ -49,3 +49,7 @@ def note_view(request, id):
     return render(request, "web/note.html", {
         'note': note
     })
+
+
+def note_add_view(request):
+    return render(request, "web/note_form.html")
