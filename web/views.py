@@ -14,5 +14,6 @@ def main_view(request):
     return render(request, "web/main.html", {
         'count': Note.objects.count(),
         'notes': notes,
-        'with_alerts': with_alerts
+        'with_alerts': with_alerts,
+        'query_params': request.GET
     })

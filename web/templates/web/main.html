@@ -11,29 +11,8 @@
     <p>
         Количество заметок: {{ count }}
         Выводить
-        {% if not with_alerts %}
-            <u>
-        {% else %}
-            <a href="?">
-        {% endif %}
-            все заметки
-        {% if not with_alerts %}
-            </u>
-        {% else %}
-            </a>
-        {% endif %}
-        |
-        {% if with_alerts %}
-            <u>
-        {% else %}
-            <a href="?with_alerts">
-        {% endif %}
-            c напоминаниями
-        {% if with_alerts %}
-            </u>
-        {% else %}
-            </a>
-        {% endif %}
+        {% filter_link "все заметки" "" query_params %} |
+        {% filter_link "c напоминаниями" "with_alerts" query_params %}
     </p>
 
     <ul>
