@@ -1,6 +1,9 @@
 from django import forms
 
+from web.models import Note
+
 
 class NoteForm(forms.Form):
-    title = forms.CharField(label='Название')
-    text = forms.CharField(widget=forms.Textarea(), label='Текст')
+    class Meta:
+        model = Note
+        fields = ('title', 'text')
