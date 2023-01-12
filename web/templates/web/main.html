@@ -2,11 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello</title>
+    <title>Заметки</title>
 </head>
 <body>
-  <h1>Notes</h1>
+  <h1>Заметки</h1>
   <hr>
-  <h2>Notes list</h2>
+  <h2>Список заметок</h2>
+    <p>Количество заметок: {{ count }}</p>
+    {{ a }} {{ b }}
+    <ul>
+        {% for item in example_list %}
+            <li>{{ item.name }} ({{ item.age }})</li>
+        {% endfor %}
+    </ul>
+
 </body>
 </html>
