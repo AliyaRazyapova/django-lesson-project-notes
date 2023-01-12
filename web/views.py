@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -14,8 +15,8 @@ def main_view(request):
 
     if search:
         notes = notes.filter(
-            title__icontains=search,
-            text__icontains=search
+            Q(title__icontains=search) |
+            Q(text__icontains=search)
         )
 
     return render(request, "web/main.html", {
