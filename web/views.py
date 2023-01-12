@@ -41,3 +41,10 @@ def notes_view(request):
         'tags': Tag.objects.all(),
         'tag_id': tag_id,
     })
+
+
+def note_view(request, id):
+    note = Note.objects.get(id=id)
+    return render(request, "web/note.html", {
+        'note': note
+    })
