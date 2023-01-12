@@ -73,6 +73,19 @@ def note_edit_view(request, id=None):
 
 def registration_view(request):
     form = RegistrationForm()
+    is_success = False
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = User(
+                email=email,
+                username=email.split('@')[0]
+            )
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            is_success = True
     return render(request, "web/registration.html", {
-        "form": form
+        "form": form,
+        'is_success': is_success
     })
