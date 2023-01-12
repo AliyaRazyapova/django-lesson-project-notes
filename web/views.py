@@ -1,16 +1,20 @@
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from web.models import Note, Tag
 
 
 def main_view(request):
+    return redirect("notes_list")
+
+
+def notes_view(request):
     with_alerts = 'with_alerts' in request.GET
     search = request.GET.get('search', None)
     try:
         tag_id = int(request.GET.get("tag_id", None))
-    except ValueError:
+    except (TypeError, ValueError):
         tag_id = None
 
     notes = Note.objects.all()

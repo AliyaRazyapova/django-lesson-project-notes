@@ -6,11 +6,11 @@
     <title>Заметки</title>
 </head>
 <body>
-  <h1>Заметки</h1>
-  <hr>
-  <h2>Список заметок</h2>
+    <h1>Заметки</h1>
+    <hr>
+    <h2>Список заметок</h2>
     <p>
-        Количество заметок: {{ count }}
+        Количество заметок: {{ count }}.
         Выводить
         {% filter_link "все заметки" "" query_params %} |
         {% filter_link "c напоминаниями" "with_alerts" query_params %}
@@ -27,17 +27,17 @@
         <input type="text" name="search" placeholder="Поиск..."
                value="{{ search|default_if_none:'' }}">
 
-        <select name="tag_id">
-            <option value="">Выберите тег</option>
-            {% for tag in tags %}
-                <option
-                    value="{{ tag.id }}"
-                    {% if tag_id == tag.id %}selected{% endif %}
-                >
-                    {{ tag.title }}
-                </option>
-            {% endfor %}
-        </select>
+<!--        <select name="tag_id">-->
+<!--            <option value="">Выберите тег</option>-->
+<!--            {% for tag in tags %}-->
+<!--                <option-->
+<!--                    value="{{ tag.id }}"-->
+<!--                    {% if tag_id == tag.id %}selected{% endif %}-->
+<!--                >-->
+<!--                    {{ tag.title }}-->
+<!--                </option>-->
+<!--            {% endfor %}-->
+<!--        </select>-->
 
         <button>Найти</button>
     </form>
