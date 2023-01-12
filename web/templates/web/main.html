@@ -15,6 +15,18 @@
         {% filter_link "c напоминаниями" "with_alerts" query_params %}
     </p>
 
+    <form action="https://google.com/search" method="get">
+        <input type="text" name="q" placeholder="Поиск...">
+        <button>Найти в Google</button>
+    </form>
+
+    <br>
+
+    <form action="" method="get">
+        <input type="text" name="search" placeholder="Поиск...">
+        <button>Найти</button>
+    </form>
+
     <ul>
         {% for note in notes %}
             <li>
