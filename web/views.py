@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from web.models import Note, Tag
@@ -45,10 +45,7 @@ def notes_view(request):
 
 
 def note_view(request, id):
-    try:
-        note = Note.objects.get(id=id)
-        return render(request, "web/note.html", {
-            'note': note
-        })
-    except Note.DoesNotExist:
-        return HttpResponse("Страница не найдена", status=404)
+    note = get_object_or_404(Note, id=id)
+    return render(request, "web/note.html", {
+        'note': note
+    })
