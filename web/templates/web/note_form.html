@@ -13,18 +13,28 @@
 
 <h1>Создание заметки</h1>
 
+{% if error %}
+    <b>Ошибка: {{ error }}</b>
+{% endif %}
+
 <form action="" method="post">
     {% csrf_token %}
 
     <label>
         Название <br>
-        <input type="text" id="title" name="title" placeholder="Введите название">
+        <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Введите название"
+                value="{{ title|default_if_none:'' }}"
+        >
     </label>
     <br><br>
 
     <label>
         Текст <br>
-        <textarea name="text" id="text"></textarea>
+        <textarea name="text">{{ text|default_if_none:'' }}</textarea>
     </label>
     <br><br>
 
