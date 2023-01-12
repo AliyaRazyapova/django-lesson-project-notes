@@ -8,12 +8,17 @@
   <h1>Заметки</h1>
   <hr>
   <h2>Список заметок</h2>
-    <p>Количество заметок: {{ count }}</p>
+    <p>
+        Количество заметок: {{ count }}
+    </p>
 
     <ul>
         {% for note in notes %}
             <li>
                 <b>{{ note.title }}</b> <small>#{{ note.id }}</small>
+                {% if note.alert_send_at %}
+                    – напомнить в {{ note.alert_send_at|date:"d.m.Y H:i" }}
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
