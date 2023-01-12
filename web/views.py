@@ -65,10 +65,9 @@ def note_edit_view(request, id=None):
 
     if request.method == 'POST':
         form = NoteForm(request.POST)
-        title = request.POST.get("title")
-        text = request.POST.get("text")
-        print(form.is_valid())
         if form.is_valid():
+            title = form.cleaned_data['title']
+            text = form.cleaned_data['text']
             if note is None:
                 note = Note()
             note.title = title
