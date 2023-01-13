@@ -2,3 +2,4 @@ django~=4.1.5
 psycopg2-binary~=2.9.5
 pillow==9.4.0
 django-stdimage==6.0.1
+factory-boy==3.2.1
