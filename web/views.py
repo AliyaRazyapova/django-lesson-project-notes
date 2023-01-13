@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count, Min, Max
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from web.forms import NoteForm, AuthForm
@@ -170,3 +172,10 @@ def stat_view(request):
         first_created_at=Min("created_at"),
         last_updated_at=Max("created_at")
     ))
+
+
+@csrf_exempt
+def example_api_view(request):
+    return JsonResponse({
+        "status": "ok"
+    })
