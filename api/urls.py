@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.urls import path
 
-from api.views import status_view, notes_view
+from api.views import status_view, notes_view, note_view
 
 urlpatterns = [
     path("", status_view),
-    path("notes/", notes_view)
+    path("notes/", notes_view),
+    path("notes/<int:id>/", note_view)
 ]
