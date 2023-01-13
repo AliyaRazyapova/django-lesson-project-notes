@@ -41,7 +41,7 @@
 
     <br>
     <a href="{% url 'notes_add' %}">Добавить заметку</a>
-    
+
     <ul>
         {% for note in object_list %}
             <li>
@@ -50,7 +50,10 @@
                         {{ note.title }}
                     </a>
                 </b>
-                <small>#{{ note.id }}</small>
+                <small>
+                    #{{ note.id }}.
+                    {{ note.comments_count }} комментариев
+                </small>
                 {% if note.alert_send_at %}
                     – напомнить в {{ note.alert_send_at|date:"d.m.Y H:i" }}
                 {% endif %}
