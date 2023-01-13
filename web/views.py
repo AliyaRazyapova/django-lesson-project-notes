@@ -89,7 +89,7 @@ class NoteMixin:
         return reverse('note', args=(self.object.title, self.object.id))
 
 
-class NoteCreateFormView(CreateView, NoteMixin):
+class NoteCreateFormView(NoteMixin, CreateView):
     form_class = NoteForm
 
 

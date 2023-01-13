@@ -14,8 +14,10 @@
         <b>Возникли ошибки при заполнении формы. Пожалуйста, исправьте их:</b>
         {{ form.errors }}
     {% endif %}
-    <form action="" method="post">
+
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+
         {{ form.as_p }}
         <button>Добавить заметку</button>
     </form>

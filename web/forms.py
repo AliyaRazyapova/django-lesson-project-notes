@@ -10,7 +10,7 @@ class NoteForm(forms.Form):
 
     class Meta:
         model = Note
-        fields = ('title', 'text')
+        fields = ('title', 'text', 'file')
 
 
 class AuthForm(forms.Form):
