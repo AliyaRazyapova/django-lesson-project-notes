@@ -26,6 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", 'django-insecure-j8lfr)_&olq*k3+#g%*sh
 DEBUG = os.environ.get("DEBUG", "true").lower() == "true"
 
 ALLOWED_HOSTS = ['*'] if DEBUG else ['test.ru']
+CSRF_TRUSTED_ORIGINS = ['http://localhost']
 
 
 # Application definition
