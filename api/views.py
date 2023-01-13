@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
-from api.serialozers import NoteSerializer
+from api.serializers import NoteSerializer
 from web.models import Note
 
 
