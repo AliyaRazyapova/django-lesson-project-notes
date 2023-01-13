@@ -25,7 +25,7 @@ def test_notes(api_client, note):
 def test_note(api_client, note):
     response = api_client.get(reverse("notes-detail", args=(note.id,)))
     assert response.status_code == status.HTTP_200_OK
-    assert note.id != response.json()['id']
+    assert note.id == response.json()['id']
 
 
 def test_note_create(api_client):
