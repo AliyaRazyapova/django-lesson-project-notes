@@ -1,10 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, DetailView, RedirectView, FormView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from web.forms import NoteForm, AuthForm
 from web.models import Note, Tag, User
@@ -68,6 +67,7 @@ class NoteDetailView(DetailView):
         return Note.objects.filter(user=self.request.user)
 
 
+
 class NoteMixin:
     template_name = 'web/note_form.html'
     slug_field = 'id'
@@ -83,7 +83,6 @@ class NoteMixin:
 
     def get_success_url(self):
         return reverse('note', args=(self.object.title, self.object.id))
-
 
 
  class NoteCreateFormView(CreateView, NoteMixin):
