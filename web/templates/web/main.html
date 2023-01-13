@@ -56,7 +56,7 @@
     {% endif %}
 
     <ul>
-        {% for note in notes %}
+        {% for note in object_list %}
             <li>
                 <b>
                     <a href="{% url "note" note.id %}">

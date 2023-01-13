@@ -15,14 +15,15 @@ Including another URLconf
 """
 from django.urls import path
 
-from web.views import main_view, notes_view, note_view, note_edit_view, RegistrationView, login_view, logout_view
+from web.views import main_view, note_view, note_edit_view, login_view, logout_view, \
+RegistrationView, NotesListView
 
 urlpatterns = [
     path("", main_view, name='main'),
     path("registration/", RegistrationView.as_view(), name='registration'),
     path("login/", login_view, name='login'),
     path("logout/", logout_view, name='logout'),
-    path("notes/", notes_view, name="notes_list"),
+    path("notes/", NotesListView.as_view(), name="notes_list"),
     path("notes/add/", note_edit_view, name="notes_add"),
     path("notes/<int:id>/", note_view, name="note"),
     path("notes/<int:id>/edit/", note_edit_view, name="note_edit"),

@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
+from django.views.generic import ListView
 
 from web.forms import NoteForm, AuthForm
 from web.models import Note, Tag, User
@@ -13,41 +14,53 @@ def main_view(request):
     return redirect("notes_list")
 
 
-def notes_view(request):
-    with_alerts = 'with_alerts' in request.GET
-    search = request.GET.get('search', None)
-    try:
-        tag_id = int(request.GET.get("tag_id", None))
-    except (TypeError, ValueError):
-        tag_id = None
+class NotesListView(ListView):
+    template_name = 'web/main.html'
 
-    if request.user.is_authenticated:
-        notes = Note.objects.filter(user=request.user).order_by('-created_at')
-    else:
-        notes = Note.objects.none()
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Note.objects.none()
+        queryset = Note.objects.filter(user=self.request.user).order_by('-created_at')
+        return self.filter_queryset(queryset)
 
-    if with_alerts:
-        notes = notes.filter(alert_send_at__isnull=False)
+    def filter_queryset(self, notes):
+        self.with_alerts = 'with_alerts' in self.request.GET
+        self.search = self.request.GET.get("search", None)
+        try:
+            self.tag_id = int(self.request.GET.get("tag_id", None))
+        except (TypeError, ValueError):
+            self.tag_id = None
 
-    if search:
-        notes = notes.filter(
-            Q(title__icontains=search) |
-            Q(text__icontains=search)
-        )
+        if self.with_alerts:
+            notes = notes.filter(alert_send_at__isnull=False)
 
-    if tag_id:
-        tag = Tag.objects.get(id=tag_id)
-        notes = notes.filter(tags__in=[tag])
+        if self.search:
+            # title="..." SELECT * FROM web_note WHERE title = "..."
+            # title__iexact="..." SELECT * FROM web_note WHERE UPPER(title) = UPPER("...")
+            # title__contains="..." SELECT * FROM web_note WHERE title LIKE = "%...%"
+            # title__icontains="..." SELECT * FROM web_note WHERE UPPER(title) LIKE = UPPER("%...%")
+            notes = notes.filter(
+                Q(title__icontains=self.search) |
+                Q(text__icontains=self.search)
+            )
 
-    return render(request, "web/main.html", {
-        'count': Note.objects.count(),
-        'notes': notes,
-        'with_alerts': with_alerts,
-        'query_params': request.GET,
-        'search': search,
-        'tags': Tag.objects.all(),
-        'tag_id': tag_id,
-    })
+        if self.tag_id:
+            tag = Tag.objects.get(id=self.tag_id)
+            notes = notes.filter(tags__in=[tag])
+        return notes
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        if not self.request.user.is_authenticated:
+            return {}
+        return {
+            **super(NotesListView, self).get_context_data(),
+            'count': Note.objects.filter(user=self.request.user).count(),
+            'with_alerts': self.with_alerts,
+            'search': self.search,
+            'tag_id': self.tag_id,
+            'query_params': self.request.GET,
+            'tags': Tag.objects.filter(user=self.request.user),
+        }
 
 
 @login_required()
