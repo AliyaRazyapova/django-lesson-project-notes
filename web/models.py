@@ -6,6 +6,7 @@ from django.contrib.auth.models import UserManager as DjangoUserManager
 from django.db import models
 from django.db.models import QuerySet, Count, CheckConstraint, Q, UniqueConstraint, Prefetch
 from django.utils.datetime_safe import datetime
+from stdimage import StdImageField
 
 from web.enums import Role
 
@@ -114,9 +115,15 @@ class Note(BaseModel):
         upload_to=get_note_file_path,
         null=True, blank=True, verbose_name='Файл',
     )
-    image = models.ImageField(
+    image = StdImageField(
         upload_to=get_note_image_path,
-        null=True, blank=True, verbose_name='Картинка'
+        null=True, blank=True, verbose_name='Картинка',
+        variations={
+            'thumbnail': {
+                'height': 200,
+                'width': 200,
+            }
+        }
     )
 
     def __str__(self):

@@ -13,7 +13,13 @@
     {% endif %}
 
     {% if object.image %}
-        <img src="{{ object.image.url }}" alt="Картинка">
+        <a href="{{ object.image.url }}" target="_blank">
+            <img
+                src="{{ object.image.thumbnail.url }}"
+                alt="Картинка"
+                style="border: 1px solid #ccc"
+            >
+        </a>
     {% endif %}
     <p>
         <small>
