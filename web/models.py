@@ -53,6 +53,10 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
+    class Meta:
+        verbose_name = 'пользователь'
+        verbose_name_plural = 'пользователи'
+
 
 class Tag(BaseModel):
     title = models.CharField(max_length=200)
@@ -67,6 +71,10 @@ class Tag(BaseModel):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = 'тег'
+        verbose_name_plural = 'теги'
+
 
 class Note(BaseModel):
     title = models.CharField(max_length=500, verbose_name='Название')
@@ -77,6 +85,10 @@ class Note(BaseModel):
 
     def __str__(self):
         return f'Note #{self.id} "{self.title}"'
+
+    class Meta:
+        verbose_name = 'заметка'
+        verbose_name_plural = 'заметки'
 
 
 class NoteComment(BaseModel):
