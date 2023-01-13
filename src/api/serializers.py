@@ -19,6 +19,10 @@ class NoteSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
     text = serializers.CharField(write_only=True)
+    thumbnail_src = serializers.SerializerMethodField()
+
+    def get_thumbnail_src(self, instance):
+        return self.context['request'].build_absolute_uri(instance.image.thumbnail.url)
 
     def validate_title(self, value):
         return value.strip()
@@ -29,4 +33,4 @@ class NoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Note
-        fields = ('id', 'title', 'text', 'user', 'comments', 'created_at')
+        fields = ('id', 'title', "text", 'user', 'comments', 'image', 'thumbnail_src', 'created_at')
