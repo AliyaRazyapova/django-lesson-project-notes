@@ -4,7 +4,7 @@ services:
   app:
     image: django2k:latest
     build:
-      dockerfile: deploy/Dockerfile
+      dockerfile: deploy/app/Dockerfile
       context: ..
     ports:
       - 8000:8000
