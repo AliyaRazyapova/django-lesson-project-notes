@@ -1,5 +1,6 @@
 from datetime import datetime
 from http import HTTPStatus
+from random import randint
 
 from django.test import TestCase
 from django.urls import reverse
@@ -37,3 +38,11 @@ class NoteFiltersTestCase(TestCase):
             response = self._check_response({"with_alerts": 1})
             self.assertNotContains(response, self.note.title)
             self.assertContains(response, note_with_alert.title)
+
+    def test_list_with_search(self):
+        response = self._check_response({"search": self.note.title})
+        self.assertContains(response, self.note.title)
+
+    def test_list_with_search_empty(self):
+        response = self._check_response({"search": str(randint(10000, 99999))})
+        self.assertNotContains(response, self.note.title)
