@@ -3,6 +3,6 @@
 - python -m venv .venv - создание виртуального окружения
 - .venv\Scripts\activate - активация виртуального окружения
 - pip install -r requirements.txt - установка зависимостей
-- python manage.py migrate - выполнить миграции
-- python manage.py runserver - запуск сервера для разработки на http://localhost:8000
+- python src/manage.py migrate - выполнить миграции
+- python scr/manage.py runserver - запуск сервера для разработки на http://localhost:8000
 - pytest - запустить автоматические тесты
