@@ -22,6 +22,7 @@ services:
       - postgres
     environment:
       DB_HOST: postgres
+      DEBUG: false
     restart: always
     volumes:
       - media:/app/src/media/
