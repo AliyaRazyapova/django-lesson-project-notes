@@ -31,6 +31,7 @@ def check_response(client, query_params=None):
     return response
 
 
+@pytest.mark.simple_list
 def test_list(client, note_with_login):
     response = check_response(client)
     assert note_with_login.title in response.content.decode()
