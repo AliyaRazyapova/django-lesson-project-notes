@@ -16,7 +16,9 @@ def status_view(request):
 
 
 class NoteViewSet(ModelViewSet):
-    queryset = Note.objects.all().optimize_for_lists().prefetch_related(
-        Prefetch('comments', NoteComment.objects.all().order_by("created_at"))
-    )
     serializer_class = NoteSerializer
+
+    def get_queryset(self):
+        return Note.objects.all().optimize_for_lists().prefetch_related(
+            Prefetch('comments', NoteComment.objects.all().order_by("created_at"))
+        ).filter(user=self.request.user)
