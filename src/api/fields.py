@@ -13,6 +13,9 @@ class StdImageField(serializers.ImageField):
     def get_variations_urls(self, object):
         return_object = {}
 
+        if not object:
+            return None
+
         field = object.field
 
         if not hasattr(field, 'variations'):

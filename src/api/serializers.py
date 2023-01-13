@@ -20,7 +20,7 @@ class NoteSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
     text = serializers.CharField(write_only=True)
-    image = StdImageField()
+    image = StdImageField(allow_null=True, required=False)
 
     def validate_title(self, value):
         return value.strip()
