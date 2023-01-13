@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.urls import path
 
-from api.views import status_view
+from api.views import status_view, notes_view
 
 urlpatterns = [
     path("", status_view),
+    path("notes/", notes_view)
 ]
