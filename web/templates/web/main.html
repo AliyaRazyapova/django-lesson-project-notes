@@ -49,7 +49,6 @@
         {% for note in object_list %}
             <li>
                 <b>
-                    <a href="{% url "note" note.id %}">
                     <a href="{% url "note" note.title note.id %}">
                         {{ note.title }}
                     </a>

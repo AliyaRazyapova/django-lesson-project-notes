@@ -17,6 +17,10 @@ def set_title_to_uppercase(modeladmin, request, queryset):
     )
 
 
+class NoteCommentInline(admin.TabularInline):
+    model = NoteComment
+
+
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'user', 'get_text_count', 'created_at')
     list_display_links = ('id', 'title')
