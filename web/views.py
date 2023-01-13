@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, DetailView, RedirectView
+from django.views.generic import ListView, DetailView, RedirectView, FormView, CreateView
 
 from web.forms import NoteForm, AuthForm
 from web.models import Note, Tag, User
@@ -66,6 +66,17 @@ class NoteDetailView(DetailView):
 
     def get_queryset(self):
         return Note.objects.filter(user=self.request.user)
+
+
+class NoteCreateFormView(CreateView):
+    form_class = NoteForm
+    template_name = 'web/note_form.html'
+
+    def get_initial(self):
+        return {'user': self.request.user}
+
+    def get_success_url(self):
+        return reverse('note', args=(self.object.title, self.object.id))
 
 
 @login_required
