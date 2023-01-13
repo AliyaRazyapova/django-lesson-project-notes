@@ -10,10 +10,6 @@ from web.forms import NoteForm, AuthForm
 from web.models import Note, Tag, User
 
 
-class MainRedirectView(RedirectView):
-    pattern_name = 'notes_list'
-
-
 class NotesListView(ListView):
     template_name = 'web/main.html'
 
