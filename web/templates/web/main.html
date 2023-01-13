@@ -48,7 +48,7 @@
 
     <br>
     {% if user.is_authenticated %}
-        <b>Вы вошли как {{ user.username }}</b>
+        <b>Вы вошли как {{ user.email }}</b>
         <a href="{% url 'logout' %}">Выйти</a>
     {% else %}
         <a href="{% url 'registration' %}">Регистрация</a>

@@ -84,10 +84,7 @@ def registration_view(request):
     if request.method == 'POST':
         form = AuthForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            user = User(username=username)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
+            User.objects.create_user(**form.cleaned_data)
             is_success = True
     return render(request, "web/registration.html", {
         "form": form,
