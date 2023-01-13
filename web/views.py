@@ -61,15 +61,17 @@ def note_view(request, id):
 def note_edit_view(request, id=None):
     form = NoteForm()
 
+    note = None
     if id is not None:
         note = get_object_or_404(Note, user=request.user, id=id)
         form = NoteForm(instance=note)
 
     if request.method == 'POST':
-        form = NoteForm(request.POST, initial={'user': request.user})
+        form = NoteForm(request.POST, instance=note, initial={'user': request.user})
         if form.is_valid():
             note = note.save()
             return redirect('note', note.id)
+
     return render(request, "web/note_form.html", {
         'id': id,
         'form': form
