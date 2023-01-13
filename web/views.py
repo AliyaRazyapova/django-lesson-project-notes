@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from web.forms import NoteForm, AuthForm
 from web.models import Note, Tag, User
@@ -177,5 +179,12 @@ def stat_view(request):
 @csrf_exempt
 def example_api_view(request):
     return JsonResponse({
+        "status": "ok"
+    })
+
+
+@api_view(['GET', 'POST', 'PUT'])
+def example_api2_view(request):
+    return Response({
         "status": "ok"
     })
