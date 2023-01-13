@@ -20,7 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-28jr4_2q50+t+286gz847=)oi5^7ki^z1q61k%49v6#a7#b^_&")
+SECRET_KEY = os.environ.get("SECRET_KEY", 'django-insecure-j8lfr)_&olq*k3+#g%*sh#z=j&7n5yu(39++d)xa)26-q)1=(u')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "true").lower() == "true"
 
@@ -78,11 +79,11 @@ WSGI_APPLICATION = 'notes.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        "NAME": os.environ.get("DB_NAME", "Django_lesson_project_3sem"),
-        "USER": os.environ.get("DB_USER", "postgres"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "123"),
-        "HOST": os.environ.get("DB_HOST", "localhost"),
-        "PORT": int(os.environ.get("DB_PORT", 5432))
+        'NAME': os.environ.get("DB_NAME",'Django_lesson_project_3sem'),
+        'USER': os.environ.get("DB_USER",'postgres'),
+        'PASSWORD': os.environ.get("DB_PASSWORD",'123'),
+        'HOST': os.environ.get("DB_HOST",'localhost'),
+        'PORT': os.environ.get("DB_PORT",5432)
     }
 }
 
@@ -124,7 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-SECRET_ROOT = 'static'
+STATIC_ROOT = "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
