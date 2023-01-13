@@ -51,9 +51,7 @@
                     </a>
                 </b>
                 <small>
-                    #{{ note.id }}.
-                    {{ note.comments_count }} комментариев
-                </small>
+                    ({{ note.comments.all.0.text }})                </small>
                 {% if note.alert_send_at %}
                     – напомнить в {{ note.alert_send_at|date:"d.m.Y H:i" }}
                 {% endif %}
