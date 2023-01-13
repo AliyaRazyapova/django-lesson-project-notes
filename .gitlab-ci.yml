@@ -1,0 +1,23 @@
+image: atnartur/docker:latest
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker-compose -f deploy/docker-compose.prod.yml build app
+    - docker-compose -f deploy/docker-compose.prod.yml build nginx
+  tags:
+    - django2k11100
+
+deploy_linux:
+  stage: deploy
+  script:
+    - docker-compose --file deploy/docker-compose.prod.yml up 
+        --build --force-recreate --detach
+  tags:
+    - django2k11100
+  only:
+    - master
