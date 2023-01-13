@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.views import View
 
 from web.forms import NoteForm, AuthForm
 from web.models import Note, Tag, User
@@ -78,18 +79,23 @@ def note_edit_view(request, id=None):
     })
 
 
-def registration_view(request):
-    form = AuthForm()
-    is_success = False
-    if request.method == 'POST':
+class RegistrationView(View):
+    def _render(self, request, form=None, is_success=False):
+        return render(request, "web/registration.html", {
+            "form": form or AuthForm(),
+            'is_success': is_success
+        })
+
+    def get(self, request, *args, **kwargs):
+        return self._render(request)
+
+    def post(self, request, *args, **kwargs):
+        is_success = False
         form = AuthForm(request.POST)
         if form.is_valid():
             User.objects.create_user(**form.cleaned_data)
             is_success = True
-    return render(request, "web/registration.html", {
-        "form": form,
-        'is_success': is_success
-    })
+        return self._render(request, form, is_success)
 
 
 def login_view(request):
