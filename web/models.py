@@ -100,7 +100,10 @@ class Note(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     alert_send_at = models.DateTimeField(null=True, blank=True, verbose_name='Время напоминания')
     tags = models.ManyToManyField(Tag, blank=True, verbose_name='Теги')
-    file = models.FileField(null=True, blank=True, verbose_name='Файл')
+    file = models.FileField(
+        upload_to='note_files/',
+        null=True, blank=True, verbose_name='Файл',
+    )
 
     def __str__(self):
         return f'Note #{self.id} "{self.title}"'
