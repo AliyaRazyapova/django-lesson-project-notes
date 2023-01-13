@@ -2,47 +2,54 @@ from datetime import datetime
 from http import HTTPStatus
 from random import randint
 
-from django.test import TestCase
+import pytest
 from django.urls import reverse
 
 from web.tests.factories import NoteFactory
 
 
-class UnauthorizedTestCase(TestCase):
-    def test_unauthorized(self):
-        response = self.client.get(reverse("notes_list"))
-        registration_link = reverse('registration')
-        self.assertContains(response, registration_link)
+def test_unauthorized(client):
+    response = client.get(reverse("notes_list"))
+    registration_link = reverse('registration')
+    assert registration_link in response.content.decode()
 
 
-class NoteFiltersTestCase(TestCase):
-    def test_list(self):
-        def setUp(self) -> None:
-            self.note = NoteFactory()
-            self.client.force_login(self.note.user)
+@pytest.fixture
+def note():
+    return NoteFactory()
 
-        def _check_response(self, query_params=None):
-            response = self.client.get(reverse('notes_list'), data=query_params)
-            self.assertEqual(response.status_code, HTTPStatus.OK)
-            return response
 
-        def test_list(self):
-            response = self._check_response()
-            self.assertContains(response, self.note.title)
+@pytest.fixture
+def note_with_login(client, note):
+    client.force_login(note.user)
+    return note
 
-        def test_list_with_alerts(self):
-            note_with_alert = NoteFactory(
-                user=self.note.user, alert_send_at=datetime.now()
-            )
 
-            response = self._check_response({"with_alerts": 1})
-            self.assertNotContains(response, self.note.title)
-            self.assertContains(response, note_with_alert.title)
+def check_response(client, query_params=None):
+    response = client.get(reverse('notes_list'), data=query_params)
+    assert response.status_code == HTTPStatus.OK
+    return response
 
-    def test_list_with_search(self):
-        response = self._check_response({"search": self.note.title})
-        self.assertContains(response, self.note.title)
 
-    def test_list_with_search_empty(self):
-        response = self._check_response({"search": str(randint(10000, 99999))})
-        self.assertNotContains(response, self.note.title)
+def test_list(client, note_with_login):
+    response = check_response(client)
+    assert note_with_login.title in response.content.decode()
+
+
+def test_list_with_alerts(client, note_with_login):
+    note_with_alert = NoteFactory(
+        user=note_with_login.user, alert_send_at=datetime.now()
+    )
+    response = check_response(client, {"with_alerts": 1})
+    assert note_with_login.title not in response.content.decode(), 'note without alert still in response'
+    assert note_with_alert.title in response.content.decode(), "note with alert isn't in response"
+
+
+def test_list_with_search(client, note_with_login):
+    response = check_response(client, {"search": note_with_login.title})
+    assert note_with_login.title in response.content.decode()
+
+
+def test_list_with_search_empty(client, note_with_login):
+    response = check_response(client, {"search": str(randint(10000, 99999))})
+    assert note_with_login.title not in response.content.decode()

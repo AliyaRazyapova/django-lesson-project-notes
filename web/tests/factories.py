@@ -11,7 +11,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 
 class NoteFactory(factory.django.DjangoModelFactory):
-    title = factory.Faker("word")
+    title = factory.Faker("sentence")
     text = factory.Faker("text")
     user = factory.SubFactory(UserFactory)
 
