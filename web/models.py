@@ -65,11 +65,11 @@ class Tag(BaseModel):
 
 
 class Note(BaseModel):
-    title = models.CharField(max_length=500)
-    text = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    alert_send_at = models.DateTimeField(null=True, blank=True)
-    tags = models.ManyToManyField(Tag, blank=True)
+    title = models.CharField(max_length=500, verbose_name='Название')
+    text = models.TextField(verbose_name='Текст')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    alert_send_at = models.DateTimeField(null=True, blank=True, verbose_name='Время напоминания')
+    tags = models.ManyToManyField(Tag, blank=True, verbose_name='Теги')
 
     def __str__(self):
         return f'Note #{self.id} "{self.title}"'
