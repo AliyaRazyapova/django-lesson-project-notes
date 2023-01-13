@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 
-from web.views import main_view, note_view, note_edit_view, login_view, logout_view, \
+from web.views import main_view, note_edit_view, note_edit_view, login_view, logout_view, \
 RegistrationView, NotesListView, NoteDetailView
 
 urlpatterns = [
