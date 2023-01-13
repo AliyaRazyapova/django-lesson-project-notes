@@ -16,10 +16,7 @@ def status_view(request):
 
 
 class NoteViewSet(ModelViewSet):
-    def get_serializer(self, *args, **kwargs):
-        return NoteSerializer(*args, **kwargs, context={
-            "request": self.request
-        })
+    serializer_class = NoteSerializer
 
     def get_queryset(self):
         return Note.objects.all().optimize_for_lists().prefetch_related(
