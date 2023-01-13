@@ -9,6 +9,8 @@ RUN pip install -r requirements.txt
 
 COPY .. .
 
+RUN python src/manage.py collectstatic --noinput
+
 EXPOSE 8000
 
 CMD python src/manage.py migrate && \

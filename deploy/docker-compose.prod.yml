@@ -10,6 +10,8 @@ services:
       - 80:80
     depends_on:
       - app
+    volumes:
+      - static:/app/static
 
   app:
     image: django2k:latest
@@ -23,6 +25,8 @@ services:
     environment:
       DB_HOST: postgres
     restart: always
+    volumes:
+      - static:/app/static
 
   postgres:
     image: postgres:14-alpine
@@ -35,3 +39,4 @@ services:
 
 volumes:
   db:
+  static:
