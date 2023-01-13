@@ -1,7 +1,13 @@
 {% if user.is_authenticated %}
-    <b>Вы вошли как {{ user.email }}</b>
-    <a href="{% url 'logout' %}">Выйти</a>
+    <span class="navbar-text">Вы вошли как {{ user.email }}</span>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+    </li>
 {% else %}
-    <a href="{% url 'registration' %}">Регистрация</a>
-    <a href="{% url 'login' %}">Вход</a>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'registration' %}">Регистрация</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">Вход</a>
+    </li>
 {% endif %}
