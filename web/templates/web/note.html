@@ -8,6 +8,10 @@
 
     <p>{{ object.text }}</p>
 
+    {% if object.file %}
+        <a href="{{ object.file.url }}">Скачать файл</a>
+    {% endif %}
+
     <p>
         <small>
             Создана {{ object.created_at|date:'d.m.Y H:i' }}.
