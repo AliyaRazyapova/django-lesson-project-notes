@@ -60,8 +60,12 @@ class Tag(BaseModel):
     parent_tag = models.ForeignKey(
         "self",
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        blank=True
     )
+
+    def __str__(self):
+        return self.title
 
 
 class Note(BaseModel):
