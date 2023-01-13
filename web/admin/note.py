@@ -50,7 +50,7 @@ class NoteAdmin(admin.ModelAdmin):
     search_fields = ('title', 'text')
     list_filter = ('created_at', 'tags', AuthorEmailDomainFilter)
     ordering = ('created_at',)
-    readonly_fields = ('get_text_count')
+    readonly_fields = ('get_text_count',)
     # exclude = ('tags',)
     actions = (set_title_to_uppercase,)
     inlines = (NoteCommentInline,)
