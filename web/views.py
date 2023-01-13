@@ -18,9 +18,7 @@ class NotesListView(ListView):
             return Note.objects.none()
         queryset = (
             Note.objects.filter(user=self.request.user)
-            .select_related('user')
-            .prefetch_related('comments')  # TODO prefetch only last comment
-            .annotate(comments_count=Count("comments"))
+            .optimize_for_lists()
             .order_by('-created_at')
         )
         return self.filter_queryset(queryset)
