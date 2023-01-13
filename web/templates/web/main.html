@@ -51,7 +51,9 @@
                     </a>
                 </b>
                 <small>
-                    ({{ note.comments.all.0.text }})
+                    {{ note.comments_count }} комментариев
+                    ({{ note.last_comments.0.text }})
+
                     {{ note.user.email }}
                 </small>
                 {% if note.alert_send_at %}

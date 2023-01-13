@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import UserManager as DjangoUserManager
 from django.db import models
-from django.db.models import QuerySet, Count, CheckConstraint, Q, UniqueConstraint
+from django.db.models import QuerySet, Count, CheckConstraint, Q, UniqueConstraint, Prefetch
 from django.utils.datetime_safe import datetime
 
 from web.enums import Role
@@ -80,9 +80,14 @@ class Tag(BaseModel):
 
 class NoteQuerySet(QuerySet):
     def optimize_for_lists(self):
+        last_comments = NoteComment.objects.all().order_by(
+            'note_id', '-created_at'
+        ).distinct('note_id')
         return (
             self.select_related('user')
-            .prefetch_related('comments')  # TODO prefetch only last comment
+            .prefetch_related(
+                Prefetch('comments', last_comments, to_attr='last_comments')
+            )
             .annotate(comments_count=Count("comments"))
         )
 
