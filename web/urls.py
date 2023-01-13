@@ -16,14 +16,14 @@ Including another URLconf
 from django.urls import path
 from django.views.generic import RedirectView
 
-from web.views import login_view, logout_view,\
-    RegistrationView, NotesListView, NoteDetailView, NoteCreateFormView, NoteUpdateView, NoteDeleteView, html_view,\
-    stat_view, example_api_view, exapmle_api2_view
+from web.views import login_view, logout_view, \
+    RegistrationView, NotesListView, NoteDetailView, NoteCreateFormView, NoteUpdateView, NoteDeleteView, html_view, \
+    stat_view, example_api_view, example_api2_view
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name='notes_list'), name='main'),
-    path("api/example/", example_api_view),
-    path("api/example2/", example_api2_view),
+    path("web_api/example/", example_api_view),
+    path("web_api/example2/", example_api2_view),
     path("registration/", RegistrationView.as_view(), name='registration'),
     path("login/", login_view, name='login'),
     path("logout/", logout_view, name='logout'),
