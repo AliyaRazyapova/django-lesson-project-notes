@@ -15,11 +15,6 @@ def test_unauthorized(client):
 
 
 @pytest.fixture
-def note():
-    return NoteFactory()
-
-
-@pytest.fixture
 def note_with_login(client, note):
     client.force_login(note.user)
     return note
