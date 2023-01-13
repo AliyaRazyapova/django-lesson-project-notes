@@ -1,0 +1,15 @@
+{% extends 'web/base.html' %}
+{% load notes %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+    <h1>Статистика по заметкам</h1>
+    <ul>
+        <li>Всего <b>{{ count }}</b> заметок</li>
+        <li><b>{{ count_with_alerts }}</b> заметок с напоминаниями</li>
+        <li><b>{{ last_created_at }}</b> создана последняя заметка</li>
+        <li><b>{{ first_created_at }}</b> создана первая заметка</li>
+        <li><b>{{ last_updated_at }}</b> обновлена последняя заметка</li>
+    </ul>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q, Count
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Count, Min, Max
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -157,3 +158,15 @@ def logout_view(request):
 
 def html_view(request):
     return render(request, "web/html.html")
+
+
+@login_required
+def stat_view(request):
+    notes = Note.objects.filter(user=request.user)
+    return render(request, "web/stat.html", notes.aggregate(
+        count=Count("id"),
+        count_with_alerts=Count("id", filter=Q(alert_send_at__isnull=False)),
+        last_created_at=Max("created_at"),
+        first_created_at=Min("created_at"),
+        last_updated_at=Max("created_at")
+    ))
