@@ -51,17 +51,18 @@ def notes_view(request):
 
 @login_required()
 def note_view(request, id):
-    note = get_object_or_404(Note, id=id)
+    note = get_object_or_404(Note, user=request.user, id=id)
     return render(request, "web/note.html", {
         'note': note
     })
 
 
+@login_required
 def note_edit_view(request, id=None):
     form = NoteForm()
 
     if id is not None:
-        note = get_object_or_404(Note, id=id)
+        note = get_object_or_404(Note, user=request.user, id=id)
         form = NoteForm(instance=note)
 
     if request.method == 'POST':
