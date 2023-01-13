@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 
-from web.models import Note, Tag
+from web.models import Note, Tag, NoteComment
 
 
 @admin.display(description='Привести название к верхнему регистру')
@@ -49,3 +49,4 @@ class TagAdmin(admin.ModelAdmin):
 
 admin.site.register(Note, NoteAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(NoteComment)

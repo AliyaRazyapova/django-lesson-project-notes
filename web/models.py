@@ -77,3 +77,18 @@ class Note(BaseModel):
 
     def __str__(self):
         return f'Note #{self.id} "{self.title}"'
+
+
+class NoteComment(BaseModel):
+    note = models.ForeignKey(
+        Note, on_delete=models.CASCADE, verbose_name='Заметка', related_name='comments'
+    )
+    text = models.TextField(verbose_name='Текст')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор комментария')
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'комментарии'
