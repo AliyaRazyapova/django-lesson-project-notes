@@ -112,8 +112,7 @@ class Note(BaseModel):
                             alert_send_at__isnull=False
                         ) | Q(alert_send_at__isnull=True)
                 )
-            ),
-            UniqueConstraint(name='unique_content', fields=('title', 'text'))
+            )
         ]
 
 
