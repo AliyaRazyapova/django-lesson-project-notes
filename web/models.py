@@ -107,10 +107,10 @@ class Note(BaseModel):
             CheckConstraint(
                 name='alert_send_at_after',
                 check=(
-                        Q(
-                            alert_send_at__gte=datetime(2022, 1, 1),
-                            alert_send_at__isnull=False
-                        ) | Q(alert_send_at__isnull=True)
+                    Q(
+                        alert_send_at__gte=datetime(2022, 1, 1),
+                        alert_send_at__isnull=False
+                    ) | Q(alert_send_at__isnull=True)
                 )
             )
         ]
@@ -129,3 +129,4 @@ class NoteComment(BaseModel):
     class Meta:
         verbose_name = 'комментарий'
         verbose_name_plural = 'комментарии'
+
