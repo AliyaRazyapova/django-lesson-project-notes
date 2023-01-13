@@ -57,6 +57,8 @@
                     {{ note.comments_count }} комментариев
                     ({{ note.comments.all.0.text }})
 {#                    note.comments.all()[0].text #}
+
+                    {{ note.user.email }}
                 </small>
                 {% if note.alert_send_at %}
                     – напомнить в {{ note.alert_send_at|date:"d.m.Y H:i" }}
