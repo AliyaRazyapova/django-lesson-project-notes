@@ -1,7 +1,6 @@
 from django.contrib import admin, messages
-from django.db.models import F, Func
-from django.db.models.expressions import RawSQL
-
+from web.db_utils import SplitPartFunc
+from web.models import Note, NoteComment, User
 from web.models import Note, Tag, NoteComment, User
 
 
@@ -31,17 +30,17 @@ class AuthorEmailDomainFilter(admin.SimpleListFilter):
         return True
 
     def lookups(self, request, model_admin):
-        email_domains = User.objects.all().annotate(
-            email_domain=Func(
-                F("email"), RawSQL("'@'", []), RawSQL("2", []), function='split_part'
-            )
-        ).values_list(
-            "email_domain", flat=True
+        email_domains = (
+            User.objects.all()
+            .annotate(email_domain=SplitPartFunc("email", "@", 2))
+            .distinct()
+            .values_list("email_domain", flat=True)
         )
-        print(email_domains.query)
         return ((d, d) for d in email_domains)
 
     def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(user__email__endswith=f'@{self.value()}')
         return queryset
 
 
