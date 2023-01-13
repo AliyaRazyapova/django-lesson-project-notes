@@ -2,7 +2,6 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import UserManager as DjangoUserManager
 from django.db import models
-from django.db.models import QuerySet, Count
 
 from web.enums import Role
 
@@ -77,18 +76,7 @@ class Tag(BaseModel):
         verbose_name_plural = 'теги'
 
 
-class NoteQuerySet(QuerySet):
-    def optimize_for_lists(self):
-        return (
-            self.select_related('user')
-            .prefetch_related('comments')  # TODO prefetch only last comment
-            .annotate(comments_count=Count("comments"))
-        )
-
-
 class Note(BaseModel):
-    objects = NoteQuerySet.as_manager()
-
     title = models.CharField(max_length=500, verbose_name='Название')
     text = models.TextField(verbose_name='Текст')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')

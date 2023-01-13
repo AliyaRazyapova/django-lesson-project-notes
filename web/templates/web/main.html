@@ -1,9 +1,13 @@
-{% extends 'web/base.html' %}
 {% load notes %}
-
-{% block title %}Список заметок{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заметки</title>
+</head>
+<body>
+    <h1>Заметки</h1>
+    <hr>
     <h2>Список заметок</h2>
     <p>
         Количество заметок: {{ count }}.
@@ -13,20 +17,19 @@
     </p>
 
     <form action="https://google.com/search" method="get">
-        <input type="text" name="q" placeholder="Поиск..." class="form-control">
-        <button class="btn btn-primary">Найти в Google</button>
+        <input type="text" name="q" placeholder="Поиск...">
+        <button>Найти в Google</button>
         (<a href="https://google.com" target="_blank">Google</a>)
     </form>
+
 
     <br>
 
     <form action="" method="get">
         <input type="text" name="search" placeholder="Поиск..."
-               value="{{ search|default_if_none:'' }}"
-               class="form-control"
-        >
+               value="{{ search|default_if_none:'' }}">
 
-        <select name="tag_id" class="form-select">
+        <select name="tag_id">
             <option value="">Выберите тег</option>
             {% for tag in tags %}
                 <option
@@ -38,28 +41,25 @@
             {% endfor %}
         </select>
 
-        <button class="btn btn-primary">Найти</button>
+        <button>Найти</button>
     </form>
 
     <br>
     <a href="{% url 'notes_add' %}">Добавить заметку</a>
 
+    <br>
+    {% include 'web/partials/login_info.html' %}
+
     <ul>
         {% for note in object_list %}
             <li>
                 <b>
+                    <a href="{% url "note" note.id %}">
                     <a href="{% url "note" note.title note.id %}">
                         {{ note.title }}
                     </a>
                 </b>
-                <small>
-                    #{{ note.id }}.
-                    {{ note.comments_count }} комментариев
-                    ({{ note.comments.all.0.text }})
-{#                    note.comments.all()[0].text #}
-
-                    {{ note.user.email }}
-                </small>
+                <small>#{{ note.id }}</small>
                 {% if note.alert_send_at %}
                     – напомнить в {{ note.alert_send_at|date:"d.m.Y H:i" }}
                 {% endif %}
@@ -67,4 +67,6 @@
             </li>
         {% endfor %}
     </ul>
-{% endblock %}
+
+</body>
+</html>

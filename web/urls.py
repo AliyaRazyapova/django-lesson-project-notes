@@ -16,7 +16,8 @@ Including another URLconf
 from django.urls import path
 from django.views.generic import RedirectView
 
-from web.views import login_view, logout_view, RegistrationView, NotesListView, NoteDetailView, NoteCreateFormView, NoteUpdateView, NoteDeleteView
+from web.views import login_view, logout_view,\
+    RegistrationView, NotesListView, NoteDetailView, NoteCreateFormView, NoteUpdateView, NoteDeleteView, html_view
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name='notes_list'), name='main'),
@@ -28,4 +29,5 @@ urlpatterns = [
     path("notes/<str:title>/<int:id>/edit/", NoteUpdateView.as_view(), name="note_edit"),
     path("notes/<str:title>/<int:id>/delete/", NoteDeleteView.as_view(), name="note_delete"),
     path("notes/<str:title>/<int:id>/", NoteDetailView.as_view(), name="note"),
+    path("html/", html_view)
 ]
