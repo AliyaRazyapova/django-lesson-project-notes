@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path
 
 from web.views import main_view, note_view, note_edit_view, login_view, logout_view, \
-RegistrationView, NotesListView
+RegistrationView, NotesListView, NoteDetailView
 
 urlpatterns = [
     path("", main_view, name='main'),
@@ -25,6 +25,6 @@ urlpatterns = [
     path("logout/", logout_view, name='logout'),
     path("notes/", NotesListView.as_view(), name="notes_list"),
     path("notes/add/", note_edit_view, name="notes_add"),
-    path("notes/<int:id>/", note_view, name="note"),
-    path("notes/<int:id>/edit/", note_edit_view, name="note_edit"),
+    path("notes/<str:title>/<int:id>/edit/", note_edit_view, name="note_edit"),
+    path("notes/<str:title>/<int:id>/", NoteDetailView.as_view(), name="note"),
 ]
