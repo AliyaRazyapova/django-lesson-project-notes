@@ -1,0 +1,41 @@
+version: version: '3'
+
+services:
+  app:
+    image: django2k:latest
+    working_dir: /app/src
+    command: bash -c "../deploy/wait-for-it.sh postgres:5432 && python manage.py migrate && pytest"
+    build:
+      dockerfile: deploy/app/Dockerfile
+      context: ..
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: notes
+      POSTGRES_USER: notes
+      POSTGRES_PASSWORD: notes'3'
+
+services:
+  app:
+    image: django2k:latest
+    working_dir: /app/src
+    command: bash -c "../deploy/wait-for-it.sh postgres:5432 && python manage.py migrate && pytest"
+    build:
+      dockerfile: deploy/app/Dockerfile
+      context: ..
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: notes
+      POSTGRES_USER: notes
+      POSTGRES_PASSWORD: notes

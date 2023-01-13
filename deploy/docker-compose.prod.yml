@@ -12,6 +12,7 @@ services:
       - app
     volumes:
       - media:/app/src/media
+    restart: always
 
   app:
     image: django2k:latest
@@ -29,6 +30,7 @@ services:
 
   postgres:
     image: postgres:14-alpine
+    restart: always
     environment:
       POSTGRES_DB: notes
       POSTGRES_USER: notes

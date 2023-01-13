@@ -2,6 +2,7 @@ image: atnartur/docker:latest
 
 stages:
   - build
+  - test
   - deploy
 
 build:
@@ -11,6 +12,16 @@ build:
     - docker-compose -f deploy/docker-compose.prod.yml build nginx
   tags:
     - django2k11100
+
+test:
+  stage: test
+  script:
+    - docker-compose -f deploy/docker-compose.test.yml -p django2k_tests run app
+  after_script:
+    - docker-compose -f deploy/docker-compose.test.yml -p django2k_tests down -v
+  tags:
+    - django2k11100
+
 
 deploy_linux:
   stage: deploy
