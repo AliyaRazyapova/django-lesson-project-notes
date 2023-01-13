@@ -16,24 +16,10 @@ def status_view(request):
     })
 
 
-class NoteViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSet):
+class NoteViewSet(
+    mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, GenericViewSet
+):
     queryset = Note.objects.all().optimize_for_lists().prefetch_related(
         Prefetch('comments', NoteComment.objects.all().order_by("created_at"))
     )
     serializer_class = NoteSerializer
-
-
-@api_view(['GET', 'PUT'])
-def note_view(request, id):
-    note = get_object_or_404(Note, id=id)
-    if request.method == "PUT":
-        serializer = NoteSerializer(
-            instance=note,
-            data=request.data,
-            context={"request": request}
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    serializer = NoteSerializer(note)
-    return Response(serializer.data)

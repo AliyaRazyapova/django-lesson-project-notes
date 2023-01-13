@@ -43,6 +43,6 @@ def test_note_update(api_client, note):
         reverse("note", args=(note.id,)),
         data={"title": "new_title", "text": "test"}
     )
-    assert response.status_code == status.HTTP_204_NO_CONTENT
+    assert response.status_code == status.HTTP_200_OK
     note.refresh_from_db()
     assert note.title == "new_title"

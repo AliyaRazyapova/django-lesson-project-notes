@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.urls import path
 
-from api.views import status_view, note_view, NoteViewSet
+from api.views import status_view, NoteViewSet
 
 urlpatterns = [
     path("", status_view, name='status'),
     path("notes/", NoteViewSet.as_view({"get": "list", "post": "create"}), name='notes'),
-    path("notes/<int:id>/", note_view, name='note')
+    path("notes/<int:pk>/", NoteViewSet.as_view({"get": "retrieve", "put": "update", "patch": "partial_update"}), name='note')
 ]
