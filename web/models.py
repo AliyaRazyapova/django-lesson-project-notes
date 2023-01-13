@@ -2,7 +2,8 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import UserManager as DjangoUserManager
 from django.db import models
-from django.db.models import QuerySet, Count
+from django.db.models import QuerySet, Count, CheckConstraint, Q, UniqueConstraint
+from django.utils.datetime_safe import datetime
 
 from web.enums import Role
 
@@ -101,6 +102,19 @@ class Note(BaseModel):
     class Meta:
         verbose_name = 'заметка'
         verbose_name_plural = 'заметки'
+        ordering = ('created_at',)
+        constraints = [
+            CheckConstraint(
+                name='alert_send_at_after',
+                check=(
+                        Q(
+                            alert_send_at__gte=datetime(2022, 1, 1),
+                            alert_send_at__isnull=False
+                        ) | Q(alert_send_at__isnull=True)
+                )
+            ),
+            UniqueConstraint(name='unique_content', fields=('title', 'text'))
+        ]
 
 
 class NoteComment(BaseModel):
