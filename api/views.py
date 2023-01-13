@@ -16,28 +16,11 @@ def status_view(request):
     })
 
 
-class NoteViewSet(mixins.ListModelMixin, GenericViewSet):
+class NoteViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSet):
     queryset = Note.objects.all().optimize_for_lists().prefetch_related(
         Prefetch('comments', NoteComment.objects.all().order_by("created_at"))
     )
     serializer_class = NoteSerializer
-
-
-@api_view(['GET', 'POST'])
-def notes_view(request):
-    if request.method == 'POST':
-        serializer = NoteSerializer(
-            data=request.data,
-            context={"request": request}
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    notes = Note.objects.all().optimize_for_lists().prefetch_related(
-        Prefetch('comments', NoteComment.objects.all().order_by("created_at"))
-    )
-    serializer = NoteSerializer(notes, many=True)
-    return Response(serializer.data)
 
 
 @api_view(['GET', 'PUT'])
