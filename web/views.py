@@ -4,14 +4,14 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, RedirectView
 
 from web.forms import NoteForm, AuthForm
 from web.models import Note, Tag, User
 
 
-def main_view(request):
-    return redirect("notes_list")
+class MainRedirectView(RedirectView):
+    pattern_name = 'notes_list'
 
 
 class NotesListView(ListView):
