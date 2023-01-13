@@ -1,20 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Название на вкладке</title>
+        <link rel="stylesheet" href="{% static 'web/style.css' %}">
     </head>
     <body>
-        <h1>Название сайта</h1>
-        <h2>Название страницы</h2>
-        <h3>...</h3>
+        <h1 id="header1">Название сайта</h1>
+        <h2 class="other_headings">Название страницы</h2>
+        <h3 class="other_headings">...</h3>
 
-        <p><b>Lorem</b> <i>ipsum</i> <s>dolor</s> <u>sit</u> amet, consectetur adipisicing elit. Adipisci, alias asperiores beatae cum deserunt eum
+        <div class="centered_block">
+            блок
+        </div>
+
+        <div id="wrap">
+            <div id="left">
+                левый
+            </div>
+            <div id="right">правый</div>
+        </div>
+
+        <p class="paragraph"><b>Lorem</b> <i>ipsum</i> <s>dolor</s> <u>sit</u> amet, consectetur adipisicing elit. Adipisci, alias asperiores beatae cum deserunt eum
             excepturi harum iusto odit provident quaerat temporibus ullam, vero. At distinctio ducimus magnam sunt
             voluptatum.</p>
         <p>A eligendi enim eos esse incidunt, iure laborum, modi molestiae natus nesciunt obcaecati odio quam quas qui
             quis suscipit tempora, temporibus voluptatum. Accusamus, aut facere harum maiores nisi quae veritatis?</p>
-        <p>Ab accusantium assumenda aut cumque deserunt distinctio ducimus earum eum exercitationem explicabo facilis id
+        <p>
+            <img
+                width="300"
+                src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg"
+                alt=""
+                style="float: left;"
+            >
+            Ab accusantium assumenda aut cumque deserunt distinctio ducimus earum eum exercitationem explicabo facilis id
             inventore ipsam, <br>
             molestias, non nostrum nulla numquam pariatur quas quisquam ratione recusandae rem rerum
             voluptatem voluptatibus.</p>
@@ -76,7 +96,7 @@
         <audio src="s.mp3" controls></audio>
 
         <form action="">
-            <label>
+            <label class="first_label">
                 <b>текст</b> <br>
                 <input type="text" placeholder="текст"> <br>
             </label>
