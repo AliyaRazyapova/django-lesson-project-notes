@@ -17,13 +17,13 @@ def test_status(api_client):
 
 
 def test_notes(api_client, note):
-    response = api_client.get(reverse("notes"))
+    response = api_client.get(reverse("notes-list"))
     assert response.status_code == status.HTTP_200_OK
     assert len(response.json()) > 0
 
 
 def test_note(api_client, note):
-    response = api_client.get(reverse("note", args=(note.id,)))
+    response = api_client.get(reverse("notes-detail", args=(note.id,)))
     assert response.status_code == status.HTTP_200_OK
     assert note.id == response.json()['id']
 
@@ -31,7 +31,7 @@ def test_note(api_client, note):
 def test_note_create(api_client):
     UserFactory()
     response = api_client.post(
-        reverse("notes"),
+        reverse("notes-list"),
         data={"title": "test", "text": "test"}
     )
     assert response.status_code == status.HTTP_201_CREATED
@@ -40,7 +40,7 @@ def test_note_create(api_client):
 def test_note_update(api_client, note):
     UserFactory()
     response = api_client.put(
-        reverse("note", args=(note.id,)),
+        reverse("notes-detail", args=(note.id,)),
         data={"title": "new_title", "text": "test"}
     )
     assert response.status_code == status.HTTP_200_OK

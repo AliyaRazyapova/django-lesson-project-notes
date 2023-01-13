@@ -14,11 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from rest_framework.routers import SimpleRouter
 
 from api.views import status_view, NoteViewSet
 
+router = SimpleRouter()
+router.register('notes', NoteViewSet, basename='notes')
+
 urlpatterns = [
-    path("", status_view, name='status'),
-    path("notes/", NoteViewSet.as_view({"get": "list", "post": "create"}), name='notes'),
-    path("notes/<int:pk>/", NoteViewSet.as_view({"get": "retrieve", "put": "update", "patch": "partial_update"}), name='note')
-]
+    path("", status_view, name='status')
+] + router.urls
