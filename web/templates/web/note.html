@@ -12,6 +12,9 @@
         <a href="{{ object.file.url }}">Скачать файл</a>
     {% endif %}
 
+    {% if object.image %}
+        <img src="{{ object.image.url }}" alt="Картинка">
+    {% endif %}
     <p>
         <small>
             Создана {{ object.created_at|date:'d.m.Y H:i' }}.

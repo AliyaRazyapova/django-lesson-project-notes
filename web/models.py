@@ -98,6 +98,10 @@ def get_note_file_path(instance, filename):
     return os.path.join("note_files", instance.created_at.strftime("%Y-%m-%d"), filename)
 
 
+def get_note_image_path(instance, filename):
+    return os.path.join("note_images", instance.created_at.strftime("%Y-%m-%d"), filename)
+
+
 class Note(BaseModel):
     objects = NoteQuerySet.as_manager()
 
@@ -109,6 +113,10 @@ class Note(BaseModel):
     file = models.FileField(
         upload_to=get_note_file_path,
         null=True, blank=True, verbose_name='Файл',
+    )
+    image = models.ImageField(
+        upload_to=get_note_image_path,
+        null=True, blank=True, verbose_name='Картинка'
     )
 
     def __str__(self):
