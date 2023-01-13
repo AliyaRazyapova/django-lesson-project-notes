@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import UserManager as DjangoUserManager
@@ -92,6 +94,10 @@ class NoteQuerySet(QuerySet):
         )
 
 
+def get_note_file_path(instance, filename):
+    return os.path.join("note_files", instance.created_at.strftime("%Y-%m-%d"), filename)
+
+
 class Note(BaseModel):
     objects = NoteQuerySet.as_manager()
 
@@ -101,7 +107,7 @@ class Note(BaseModel):
     alert_send_at = models.DateTimeField(null=True, blank=True, verbose_name='Время напоминания')
     tags = models.ManyToManyField(Tag, blank=True, verbose_name='Теги')
     file = models.FileField(
-        upload_to='note_files/',
+        upload_to=get_note_file_path,
         null=True, blank=True, verbose_name='Файл',
     )
 
