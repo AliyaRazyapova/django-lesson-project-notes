@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Count, Min, Max
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -15,7 +16,12 @@ class NotesListView(ListView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
             return Note.objects.none()
-        queryset = Note.objects.filter(user=self.request.user).order_by('-created_at')
+        queryset = (
+            Note.objects.filter(user=self.request.user)
+            .prefetch_related('comments')  # TODO prefetch only last comment
+            .annotate(comments_count=Count("comments"))
+            .order_by('-created_at')
+        )
         return self.filter_queryset(queryset)
 
     def filter_queryset(self, notes):
@@ -67,7 +73,6 @@ class NoteDetailView(DetailView):
         return Note.objects.filter(user=self.request.user)
 
 
-
 class NoteMixin:
     template_name = 'web/note_form.html'
     slug_field = 'id'
@@ -85,8 +90,8 @@ class NoteMixin:
         return reverse('note', args=(self.object.title, self.object.id))
 
 
- class NoteCreateFormView(CreateView, NoteMixin):
-     form_class = NoteForm
+class NoteCreateFormView(CreateView, NoteMixin):
+    form_class = NoteForm
 
 
 class NoteUpdateView(NoteMixin, UpdateView):
@@ -150,3 +155,19 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('main')
+
+
+def html_view(request):
+    return render(request, "web/html.html")
+
+
+@login_required
+def stat_view(request):
+    notes = Note.objects.filter(user=request.user)
+    return render(request, "web/stat.html", notes.aggregate(
+        count=Count("id"),
+        count_with_alerts=Count("id", filter=Q(alert_send_at__isnull=False)),
+        last_created_at=Max("created_at"),
+        first_created_at=Min("created_at"),
+        last_updated_at=Max("created_at")
+    ))
