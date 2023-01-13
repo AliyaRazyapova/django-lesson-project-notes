@@ -1,13 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Заметка {{ object.title }}</title>
-</head>
-<body>
+{% extends 'web/base.html' %}
+{% block title %}Заметка {{ object.title }}{% endblock %}
+{% block content %}
     <a href="{% url 'notes_list' %}">Назад</a>
     <a href="{% url 'note_edit' object.title object.id %}">Редактировать заметку</a>
     <a href="{% url 'note_delete' object.title object.id %}">Удалить заметку</a>
@@ -21,5 +14,4 @@
             Обновлена {{ object.updated_at|date:'d.m.Y H:i' }}.
         </small>
     </p>
-</body>
-</html>
+{% endblock %}

@@ -1,13 +1,8 @@
+{% extends 'web/base.html' %}
 {% load notes %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Заметки</title>
-</head>
-<body>
-    <h1>Заметки</h1>
-    <hr>
+{% block title %}Список заметок{% endblock %}
+
+{% block content %}
     <h2>Список заметок</h2>
     <p>
         Количество заметок: {{ count }}.
@@ -68,5 +63,4 @@
         {% endfor %}
     </ul>
 
-</body>
-</html>
+{% endblock %}

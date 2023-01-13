@@ -1,36 +1,22 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Добавление заметки</title>
-</head>
-<body>
-
-<a href="{% url 'notes_list' %}">Главная страница</a>
-{% if id %}
-    <a href="{% url 'note' title id %}">Перейти к заметке</a>
-{% endif %}
-{% if id %}
-<h1>Редактирование заметки</h1>
-{% else %}
-<h1>Добавление заметки</h1>
-{% endif %}
-
-{% if form.errors %}
-    <b>Возникли ошибки при заполнении формы. Пожалуйста, исправьте их:</b>
-    {{ form.errors }}
-{% endif %}
-
-<form action="" method="post">
-    {% csrf_token %}
-
-    {{form.as_p}}
-
-    <button>Добавить заметку</button>
-</form>
-
-</body>
-</html>
+{% extends 'web/base.html' %}
+{% block title %}Добавление заметки{% endblock %}
+{% block content %}
+    <a href="{% url 'notes_list' %}">Главная страница</a>
+    {% if id %}
+        <a href="{% url 'note' title id %}">Перейти к заметке</a>
+    {% endif %}
+    {% if id %}
+    <h1>Редактирование заметки</h1>
+    {% else %}
+    <h1>Добавление заметки</h1>
+    {% endif %}
+    {% if form.errors %}
+        <b>Возникли ошибки при заполнении формы. Пожалуйста, исправьте их:</b>
+        {{ form.errors }}
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Добавить заметку</button>
+    </form>
+{% endblock %}
