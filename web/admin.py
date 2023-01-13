@@ -1,6 +1,20 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 
 from web.models import Note, Tag
+
+
+@admin.display(description='Привести название к верхнему регистру')
+def set_title_to_uppercase(modeladmin, request, queryset):
+    objects = []
+    for item in queryset:
+        item.title = item.title.upper()
+        objects.append(item)
+    Note.objects.bulk_update(objects, ['title'])
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        f'Обновлены {len(objects)} объектов'
+    )
 
 
 class NoteAdmin(admin.ModelAdmin):
@@ -10,8 +24,8 @@ class NoteAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     ordering = ('created_at',)
     readonly_fields = ('alert_send_at', 'get_text_count')
-
     # exclude = ('tags',)
+    actions = (set_title_to_uppercase,)
 
     @admin.display(description='Text count')
     def get_text_count(self, instance):
