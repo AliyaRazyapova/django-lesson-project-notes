@@ -1,4 +1,4 @@
-# Django lesson project 3sem
+# Django lesson project notes
 
 - python -m venv .venv - создание виртуального окружения
 - .venv\Scripts\activate - активация виртуального окружения
